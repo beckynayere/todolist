@@ -1,11 +1,13 @@
 import express, { Request, Response } from "express";
 import connectToDatabase from "./db";
+import dotenv from "dotenv";
 
 const app = express();
+dotenv.config();
 
 const PORT = 1357;
 
-connectToDatabase
+connectToDatabase();
 
 app.get("/ping", (request: Request, response: Response) => {
     response.send('Pong');
