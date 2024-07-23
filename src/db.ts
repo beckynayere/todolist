@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const connectToDatabase = async () => {
     try {
         const connection = await mongoose.connect(
-            "mongodb+srv://nayere:<password>@atlascluster.1pkzt9h.mongodb.net/"
+            "mongodb+srv://nayere:l89uVoQqbHFrznrc@atlascluster.1pkzt9h.mongodb.net/"
         )
         if (connection) {
             console.log("Connection established")
