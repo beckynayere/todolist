@@ -6,7 +6,7 @@ dotenv.config()
 const connectToDatabase = async () => {
     try {
         const connection = await mongoose.connect(
-            "mongodb+srv://nayere:l89uVoQqbHFrznrc@atlascluster.1pkzt9h.mongodb.net/"
+            "mongodb+srv://nayere:l89uVoQqbHFrznrc@atlascluster.1pkzt9h.mongodb.net/todolist"
         )
         if (connection) {
             console.log("Connection established")
