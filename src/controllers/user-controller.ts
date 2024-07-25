@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 import User from "../models/user-model";
 import dotenv from "dotenv";
 
@@ -29,24 +29,37 @@ try {
   return response.status(500).send({ message: "Internal server error" });
 };
 
-// }catch (error) {
-//     console.log("error in Createuser, error");
-//     throw error
-// };
-
 }
 
-const loginUser = async (request:Request, response:Response) => {
+// const loginUser = async (request:Request, response:Response) => {
+//     try {
+//         const { email, password}= request.body as IUser;
+//         const exsistingUser = User.findOne({ email });
+//         if (!exsistingUser) {
+//             return response.status(409).send({message: "User doesnt exsist"});
+//         }
+
+//         const isPasswordIdentical = await bcrypt.compare(password,(await exsistingUser).password );
+const loginUser = async (request: Request, response: Response) => {
     try {
-        const {} = request.body
+      const { email, password } = request.body;
+      const existingUser = await User.findOne({ email });
+      if (!existingUser) {
+        return response.status(409).send({ message: "User doesn't exist" });
+      }
+  
+      const isPasswordIdentical = await bcrypt.compare(password, existingUser.password);
+      if (!isPasswordIdentical) {
+        return response.status(401).send({ message: "Incorrect password" });
+      }
+    return response.status(200).send({ message: "Login successful" });
+  } catch (error) {
+    console.error('Error in loginUser:', error);
+    return response.status(500).send({ message: "Internal server error" });
+  }
+};
 
-        } catch (error) {
-            console.log('error in loggingUser, error ');
-            throw(error)
-        }
-    }
 
-
-export { createUser };
+export { createUser, loginUser };
 
 
